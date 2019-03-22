@@ -3,11 +3,11 @@ language: generic
 matrix:
   include:
     - os: linux
-      env: DOCKERIMAGE=linux-anvil:gcc-5
-
-    - os: linux
       env: DOCKERIMAGE=linux-anvil
       
+    - os: linux
+      env: DOCKERIMAGE=linux-anvil:gcc-5
+
     - os: linux
       env: DOCKERIMAGE=linux-anvil-ppc64le
 
@@ -29,11 +29,12 @@ before_install:
 
 install:
     - |
-      $DOCKERIMAGETAG=$(echo $DOCKERIMAGE | cut -d ':' -f2)
-      if [[ ! -z "$DOCKERIMAGETAG" ]]
+      DOCKERBASEIMAGE=$(echo $DOCKERIMAGE | cut -d ':' -f1)
+      DOCKERIMAGETAG=$(echo $DOCKERIMAGE | cut -d ':' -f2)
+      if [ ! -z "$DOCKERIMAGETAG" ]
       then
-        mkdir -p $DOCKERIMAGE
-        sed "s|@BASE_IMAGE@|practicalci/${DOCKERIMAGE/:$DOCKERIMAGETAG/}|" $DOCKERIMAGETAG/Dockerfile.in > $DOCKERIMAGE/Dockerfile
+          mkdir -p $DOCKERIMAGE
+          sed "s|@BASE_IMAGE@|practicalci/${DOCKERBASEIMAGE}|" $DOCKERIMAGETAG/Dockerfile.in > $DOCKERIMAGE/Dockerfile
       fi
     - docker build -t practicalci/$DOCKERIMAGE -f $DOCKERIMAGE/Dockerfile --no-cache .
 
