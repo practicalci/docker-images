@@ -24,7 +24,8 @@ RUN apt-get update -y && \
                    patch \
                    tar \
                    ca-certificates \
-                   curl && \
+                   curl \
+                   git && \
     apt-get clean -y && \
     apt-get autoremove --purge -y && \
     rm -rf /var/lib/apt/lists/*

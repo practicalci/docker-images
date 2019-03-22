@@ -1,3 +1,5 @@
+#!/bin/bash
+
 DOCKERBASEIMAGE=$(echo $DOCKERIMAGE | cut -d ':' -sf1)
 DOCKERIMAGETAG=$(echo $DOCKERIMAGE | cut -d ':' -sf2)
 if [ ! -z "$DOCKERIMAGETAG" ]
