@@ -4,18 +4,24 @@ matrix:
   include:
     - os: linux
       env: DOCKERIMAGE=linux-anvil
+
+    - os: linux
+      env: DOCKERIMAGE=linux-anvil:gcc-7
+env:
+  global:
+    secure: "r0LxeZN6GFq5+ATqn4t36aZ5omdTzxEVvCEG4CnBTOoT0P/nsGxfFJhVxDDcGPxNqs76zvMV08hgo8WJeA2WqCREBkhXRM8VTH4zABPsxDYq8ZsjwdgDYne7qyEwuhpEUBvS0KsXrlAsYSzPzHReBxveSZUpwL/10Ud1PcRBSsP+X+Uin51q6juBAOs4DNF55bON/KaZztq0jGkJBW6CcJ7Q3W/Nm3R7JAIFyXzF0SVTCrinSDKCC8Fk/JjjHHKmNbVXfxJVN9XYNmJOvCUSf6uoUstLRLLs5WOJ5Ny7XlHYHYYVA4gpRER2+58SILBXqThRm9JfXNuZ9Z3kSkfWI0qU14DjIRNW8LBzyo1luX7c42/zWLzOcOx8m5etavEJ4sohw2IOsUE/R/1zLrwTFsf5Os9HJ2ImdHtVEMefX5ePesg5s6coh+UFVdef9dlidvphA8kzzWhX91+PC8E9KnhA9TI5eeqr4V+Qkmze3WPzzPJRhaIKFy3xpnjGmPRVk5bHjQ3znR1sjAnHo2zz+1QZ6FY0+ercv6WES2FNDASoqpNiJtpLoZFVhL7SblfXdQ/bWdRcPNALC67a9Fre7kCEJlqQ4ggrxAwoPwJ5VSncA1uiTXLbGjMHqhD1oCKxpcnUve+QSP8nHAZi9uOz2QROig059z7sehvokSzPjzY="
       
 before_install:
     - docker info
     - |
-      if [ "$(uname -m)" = "x86_64" ]; then
-          docker run --rm --privileged multiarch/qemu-user-static:register --reset
-      fi
-      export QEMU_STATIC_VERSION=v3.1.0-2
-      wget https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_STATIC_VERSION}/qemu-ppc64le-static
-      wget https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_STATIC_VERSION}/qemu-aarch64-static
-      chmod +x qemu-ppc64le-static
-      chmod +x qemu-aarch64-static
+      #if [ "$(uname -m)" = "x86_64" ]; then
+      #    docker run --rm --privileged multiarch/qemu-user-static:register --reset
+      #fi
+      # export QEMU_STATIC_VERSION=v3.1.0-2
+      # wget https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_STATIC_VERSION}/qemu-ppc64le-static
+      # wget https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_STATIC_VERSION}/qemu-aarch64-static
+      # chmod +x qemu-ppc64le-static
+      # chmod +x qemu-aarch64-static
 
 install:
     - |
@@ -34,8 +40,6 @@ script:
       then
         ./.circleci/run_docker_build.sh
       fi
-      echo "DH_PASSWORD"
-      echo $DH_PASSWORD
 
 deploy:
   provider: script
