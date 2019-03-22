@@ -29,8 +29,8 @@ before_install:
 
 install:
     - |
-      DOCKERBASEIMAGE=$(echo $DOCKERIMAGE | cut -d ':' -f1)
-      DOCKERIMAGETAG=$(echo $DOCKERIMAGE | cut -d ':' -f2)
+      DOCKERBASEIMAGE=$(echo $DOCKERIMAGE | cut -d ':' -sf1)
+      DOCKERIMAGETAG=$(echo $DOCKERIMAGE | cut -d ':' -sf2)
       if [ ! -z "$DOCKERIMAGETAG" ]
       then
           mkdir -p $DOCKERIMAGE
