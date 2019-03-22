@@ -3,6 +3,9 @@ language: generic
 matrix:
   include:
     - os: linux
+      env: DOCKERIMAGE=linux-anvil:gcc-5
+
+    - os: linux
       env: DOCKERIMAGE=linux-anvil
       
     - os: linux
@@ -26,10 +29,11 @@ before_install:
 
 install:
     - |
-      if [[ $DOCKERIMAGE =~ ":jnlp-slave" ]]
+      $DOCKERIMAGETAG=$(echo $DOCKERIMAGE | cut -d ':' -f2)
+      if [[ ! -z "$DOCKERIMAGETAG" ]]
       then
         mkdir -p $DOCKERIMAGE
-        sed "s|@BASE_IMAGE@|condaforge/${DOCKERIMAGE/:jnlp-slave/}|" jnlp-slave/Dockerfile.in > $DOCKERIMAGE/Dockerfile
+        sed "s|@BASE_IMAGE@|practicalci/${DOCKERIMAGE/:$DOCKERIMAGETAG/}|" $DOCKERIMAGETAG/Dockerfile.in > $DOCKERIMAGE/Dockerfile
       fi
     - docker build -t practicalci/$DOCKERIMAGE -f $DOCKERIMAGE/Dockerfile --no-cache .
 
