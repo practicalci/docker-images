@@ -1,7 +1,7 @@
 FROM @BASE_IMAGE@
 
 RUN apt-get update -y && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
                    g++-5 \
                    gcc-5 \
                    iwyu \

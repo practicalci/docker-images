@@ -18,7 +18,7 @@ RUN echo -e \
 
 # Install basic requirements.
 RUN apt-get update -y && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
                    bzip2 \
                    make \
                    patch \
