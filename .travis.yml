@@ -5,12 +5,6 @@ matrix:
     - os: linux
       env: DOCKERIMAGE=linux-anvil
       
-    - os: linux
-      env: DOCKERIMAGE=linux-anvil:gcc-5
-
-    - os: linux
-      env: DOCKERIMAGE=linux-anvil-ppc64le
-
 before_install:
     - docker info
     - |
@@ -40,7 +34,9 @@ script:
       then
         ./.circleci/run_docker_build.sh
       fi
+      echo "DH_PASSWORD"
+      echo $DH_PASSWORD
 
 deploy:
   provider: script
-  script: echo $DH_PASSWOR && echo $DH_PASSWORD | docker login -u practicalcibot --password-stdin  && docker push practicalci/$DOCKERIMAGE
+  script: echo $DH_PASSWORD | docker login -u practicalcibot --password-stdin  && docker push practicalci/$DOCKERIMAGE
