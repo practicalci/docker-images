@@ -43,4 +43,4 @@ script:
 
 deploy:
   provider: script
-  script: echo $DH_PASSWORD | docker login -u practicalcibot --password-stdin  && docker push practicalci/$DOCKERIMAGE
+  script: echo $DH_PASSWOR && echo $DH_PASSWORD | docker login -u practicalcibot --password-stdin  && docker push practicalci/$DOCKERIMAGE
