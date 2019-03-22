@@ -23,7 +23,6 @@ RUN apt-get update -y && \
                    bzip2 \
                    make \
                    patch \
-                   gosu \
                    tar \
                    curl && \
     apt-get clean -y && \
