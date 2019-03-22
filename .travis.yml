@@ -11,10 +11,6 @@ matrix:
     - os: linux
       env: DOCKERIMAGE=linux-anvil-ppc64le
 
-env:
-  global:
-    secure: "J6NyM0UmNuPzkh/Dkm6rsmqH7AQi+hX0e5uj8xF+lFifAoc99zNauZ8KqWrtw48Uoti0ob0qjH3b1V3/oA60iVnnFzF4YBhsUcCRWSxfWC21pzwMDjhBqRDiyNsGnEbiUAgBHibZfDL+iOw1NpqRD7Ke9i908ivDzH2ezhQzIi+L7IWXRcSsMeeynVuQ9JtMXIYA5Qv9FRz0BZsd5iCGrMIQV9BgrZM90X53e2ixy7JpW6wDdilfer79Gb14aY4DScm/yC45RinD9wes4WSfv0jqq7mPgq0J76X+aaGN833lLLBnuSpO4vGYgDVigSdRSHl2vGyI62KCfDUvBxnWokZ/BptdASzJQMut8V6zX4kH7IeNfZWQVVVUL5c+RP5lMn3YUA3YuXrzVdhyVn24MigX7sOzj+xZuCk0I/SWX44F7y1pyfbI3I65eNW28zHIs64eZQ9KuL+U11dNUDDrS/jFNNdmR336GfqmMBrIbsoLgbaoeTsMqSZP+1Jh8AbkzujraAOs9siAU6sy1PLfaHY1j8MFd2bzcK2eq115m+dcofpIKQwjFhqQEqwX0xRuRAXyQxQVYwn/gfnerkE87kLsWIN4zJW9dVPhWNXABm9oXQqK8LAsowHh4zOVU1YvHgosHIFzP+g/poG2lyGv+cwGjIIyj8vMzsfTziTPwR8="
-
 before_install:
     - docker info
     - |
@@ -47,4 +43,4 @@ script:
 
 deploy:
   provider: script
-  script: docker login -u practicalcibot -p $DH_PASSWORD && docker push practicalci/$DOCKERIMAGE
+  script: echo $DH_PASSWORD | docker login -u practicalcibot --password-stdin  && docker push practicalci/$DOCKERIMAGE
