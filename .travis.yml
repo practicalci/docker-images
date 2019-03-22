@@ -4,25 +4,13 @@ matrix:
   include:
     - os: linux
       env: DOCKERIMAGE=linux-anvil
-
-    - os: linux
-      env: DOCKERIMAGE=linux-anvil:jnlp-slave
-
-    - os: linux
-      env: DOCKERIMAGE=linux-anvil-comp7
-
-    - os: linux
-      env: DOCKERIMAGE=linux-anvil-comp7:jnlp-slave
       
     - os: linux
       env: DOCKERIMAGE=linux-anvil-ppc64le
 
-    - os: linux
-      env: DOCKERIMAGE=linux-anvil-aarch64
-
 env:
   global:
-    secure: "nM8OaFilQkH14wzD1S6DTGejjo3yL/q/1dpz7144Kw68s8FVqW0zsxCC6960ieokY2LutGSv16qTiIFxnRZnHPCXt7X2MhxcagX8IcMu62DWe2jgqwho0hPI65N/bQYLW1l23e9tjKQxWFZopM4Oyzm6TBqlzibTdbPuQI+YB3RBY0dlkIlupPIYtiNlLRR/HnOyyUny/hg3Z65GWeVpXhiMPqXLlfliTiQ31JgBaNuXiP3/ruSCDeyRPWx62IcPGJ1xVSXL3tvkEI2TpGVCsraKCSbgINhm3AHjQ+8ST6GPMxaOaHrKZzssKJpsZhz1dzWINXTLOQ5LrKtBVwfaevFxDmPEr9RcVlzwAAyuWugCyV4Z6NSt/j2Qqw5qGaiiDHyBH0FMmBgzlPzLZ4JKFsZ68aRkc2qV0MeN0YJRwcQ0EnXRULrcwReBztDHZwixSxqlPpQUwbRr7ne05rBjVoMTKaEhyHPO+KYSwQB1wiQgILBtlP/5ofsYc9Eb46m5JJJhJxuLythKpW9mMqd/US4rQrgEHQ/QRIRYwzGnKf/5WXV3W2o4C9QZpH5Da3J7jOLlqxIY5I+Dv9eEk7XxhT7UaEo7C9tmzjaL2D0yrzPnOnPQhMpmCVNWqdTp1eLcIASKSPbmzz8MuYB5yg48wjXWvDIRBQ6hJyuKHhNGE9k="
+    secure: TQkj0g+2b3yHi3uVPii7OWPrJ6w/FpBmm4Fv0C0NbWU7P6xOBDawAX+FnwxsvlGUVh5sy3f2HjSfOUGVAOgSI1sdnQ2EWJSpabK6s5s/X7CPj/7v/CPjIodAoWkfM7qDnTHBhZmOGMSZOLCx57fDbiPcwS4ltgnz02C4sENJb5MrK6a6zaDeMyaEZtMgBWPnRMh2GsHRtkONCOttjYiLj0NIBrjZsxCxx3nT0SzJWfh+6gLyGVjZoTtex1v6zroYgrfmgvGZFPWNhj75bzdltkctpn1hIdZ6B7R72hBMdWUIeW1vL6Mk4to09czNQBj37l9f4XJE6B27mcP2NXX92/jyxVPJl4BeUv0xU9d3CZgwiHUJUfSMVZDPRWa3YAMTwpOknOk7/6BGnwYhk64p47XeWEGOvicL6xJaW2VyRB1zIurIKiu5fC0mJ1UdWsU1sIEM+cwO5pTywZnPqVq7ta2ORAsw19hdpCO3RAtzFE31SXkhhEJyrr25zyv74QZ9b/THUPwHrGumicFbB/mm1Gs2fEsSTnCvgatIRze2y5egXRhyxF37y3c2ghe3MQpXvjBlVO6tqGFlhYAjQkSTd/fMyrodxyljeEqvh3kATO2Q//LrjXLdwL0PY1ymbxGixnfFnC+Xz8Wube22+LdSjqU8T61H4IsIUaSmLg/bP7Y=
 
 before_install:
     - docker info
@@ -43,7 +31,7 @@ install:
         mkdir -p $DOCKERIMAGE
         sed "s|@BASE_IMAGE@|condaforge/${DOCKERIMAGE/:jnlp-slave/}|" jnlp-slave/Dockerfile.in > $DOCKERIMAGE/Dockerfile
       fi
-    - docker build -t condaforge/$DOCKERIMAGE -f $DOCKERIMAGE/Dockerfile --no-cache .
+    - docker build -t practicalci/$DOCKERIMAGE -f $DOCKERIMAGE/Dockerfile --no-cache .
 
 script:
     - |
@@ -54,4 +42,4 @@ script:
 
 deploy:
   provider: script
-  script: docker login -u condaforgebot -p $DH_PASSWORD && docker push condaforge/$DOCKERIMAGE
+  script: docker login -u practicalcibot -p $DH_PASSWORD && docker push practicalci/$DOCKERIMAGE

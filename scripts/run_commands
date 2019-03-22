@@ -6,12 +6,12 @@ export additional_channel=""
 
 if [ "$(uname -m)" = "x86_64" ]; then
    export supkg="gosu"
-   export condapkg="https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh"
-   export conda_chksum="a946ea1d0c4a642ddf0c3a26a18bb16d"
+   export condapkg="https://repo.continuum.io/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh"
+   export conda_chksum="e1045ee415162f944b6aebfe560b8fee"
 elif [ "$(uname -m)" = "ppc64le" ]; then
-   export supkg="su-exec"
-   export condapkg="https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-ppc64le.sh"
-   export conda_chksum="05c1e073f262105179cf57920dfc4d43"
+   export supkg="gosu"
+   export condapkg="https://repo.continuum.io/miniconda/Miniconda3-4.5.11-Linux-ppc64le.sh"
+   export conda_chksum="4b1ac3b4b70bfa710c9f1c5c6d3f3166"
 elif [ "$(uname -m)" = "aarch64" ]; then
    export supkg="su-exec"
    export condapkg="https://github.com/jjhelmus/conda4aarch64/releases/download/1.0.0/c4aarch64_installer-1.0.0-Linux-aarch64.sh"
@@ -24,7 +24,7 @@ fi
 
 # give sudo permission for conda user to run yum (user creation is postponed
 # to the entrypoint, so we can create a user with the same id as the host)
-echo 'conda ALL=NOPASSWD: /usr/bin/yum' >> /etc/sudoers
+echo 'conda ALL=NOPASSWD: /usr/bin/apt-get' >> /etc/sudoers
 
 # Install the latest Miniconda with Python 3 and update everything.
 curl -s -L $condapkg > miniconda.sh

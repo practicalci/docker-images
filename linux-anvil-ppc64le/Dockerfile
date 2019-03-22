@@ -1,36 +1,34 @@
-FROM ppc64le/centos:7
+FROM ppc64le/ubuntu:bionic-20190307
 
-MAINTAINER conda-forge <conda-forge@googlegroups.com>
-
-# Add qemu in here so that we can use this image on regular linux hosts with qemu user installed
-ADD qemu-ppc64le-static /usr/bin/qemu-ppc64le-static
+LABEL maintainer="Mario Costa <mario.silva.costa@gmail.com>"
 
 # Set an encoding to make things work smoothly.
 ENV LANG en_US.UTF-8
-ENV LANGUAGE=en_US.UTF-8
 
 # Add a timestamp for the build. Also, bust the cache.
 ADD http://worldclockapi.com/api/json/utc/now /opt/docker/etc/timestamp
 
-# Resolves a nasty NOKEY warning that appears when using yum.
-RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-
-# Fix up issues with locales because the default images have these minimized
-# to the point of not being properly functional
-# See: https://github.com/CentOS/sig-cloud-instance-images/issues/71
-RUN yum update -y && \
-    yum reinstall -y glibc-common
-RUN localedef -i en_US -f UTF-8 en_US.UTF-8
+# Do not prompt for configuration update
+# https://askubuntu.com/a/104912
+RUN echo -e \
+"Dpkg::Options {\n\
+   \"--force-confdef\";\n\
+   \"--force-confold\";\n\
+}\n" > /etc/apt/apt.conf.d/local
 
 # Install basic requirements.
-RUN yum update -y && \
-    yum install -y \
-        bzip2 \
-        patch \
-        sudo \
-        tar \
-        which && \
-    yum clean all
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+                   bzip2 \
+                   make \
+                   patch \
+                   gosu \
+                   tar \
+                   curl && \
+    apt-get clean -y && \
+    apt-get autoremove --purge -y && \
+    rm -rf /var/lib/apt/lists/*
 
 # Run common commands
 COPY scripts/run_commands /opt/docker/bin/run_commands
