@@ -43,8 +43,8 @@ conda update --all --yes
 conda clean -tipy
 
 # Install conda build and deployment tools.
-conda install --yes --quiet conda-build anaconda-client jinja2 setuptools git python=3.7
-conda clean -tipsy
+conda install --yes --quiet conda-build anaconda-client jinja2 setuptools git python=3.6
+conda clean -tipy
 
 # Install docker tools
 conda install --yes $supkg
@@ -54,7 +54,8 @@ echo "$supkg ${CONDA_SUEXEC_INFO[1]}" >> /opt/conda/conda-meta/pinned
 conda install --yes tini
 export CONDA_TINI_INFO=( `conda list tini | grep tini` )
 echo "tini ${CONDA_TINI_INFO[1]}" >> /opt/conda/conda-meta/pinned
-conda clean -tipsy
+conda clean -tipy
+conda build purge-all
 
 # Lucky group gets permission to write in the conda dir
 groupadd -g 32766 lucky

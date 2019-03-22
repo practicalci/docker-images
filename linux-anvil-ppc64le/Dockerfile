@@ -18,7 +18,7 @@ RUN echo -e \
 
 # Install basic requirements.
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
                    bzip2 \
                    make \
                    patch \
