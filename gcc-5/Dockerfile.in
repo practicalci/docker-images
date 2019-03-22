@@ -1,9 +1,9 @@
 FROM @BASE_IMAGE@
 
 RUN apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-                   g++-5 \
-                   gcc-5 \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+                   g++-6 \
+                   gcc-6 \
                    iwyu \
                    clang-tidy-6.0 \
                    clang-format-6.0 && \
