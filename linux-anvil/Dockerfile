@@ -51,4 +51,3 @@ WORKDIR /work
 # Activate the `conda` environment `root` and the devtoolset compiler.
 # Provide a default command (`bash`), which will start if the user doesn't specify one.
 ENTRYPOINT [ "/opt/conda/bin/tini", "--", "/opt/docker/bin/entrypoint.sh" ]
-CMD [ "/bin/bash" ]
