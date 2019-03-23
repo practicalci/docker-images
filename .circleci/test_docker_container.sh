@@ -14,4 +14,4 @@ conda list
 # check that we can install a conda package
 conda install --yes --quiet conda-forge-pinning -c conda-forge
 
-touch /home/conda/feedstock_root/build_artifacts/conda-forge-build-done
+touch ./build_artifacts/conda-forge-build-done

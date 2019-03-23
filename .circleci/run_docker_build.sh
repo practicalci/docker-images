@@ -22,12 +22,12 @@ mkdir -p "$ARTIFACTS"
 DONE_CANARY="$ARTIFACTS/conda-forge-build-done"
 rm -f "$DONE_CANARY"
 
-docker run -it \
-           -v "${FEEDSTOCK_ROOT}":/home/conda/feedstock_root \
-           -e HOST_USER_ID \
-           `docker images -q practicalci/$DOCKERIMAGE` \
-           bash \
-           /home/conda/feedstock_root/.circleci/test_docker_container.sh
+cd $FEEDSTOCK_ROOT
+
+docker run --rm `docker images -q practicalci/$DOCKERIMAGE` > dockcross
+
+chmod +x dockcross
+./dockcross ./.circleci/test_docker_container.sh
 
 # verify that the end of the script was reached
 test -f "$DONE_CANARY"

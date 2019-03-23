@@ -70,7 +70,7 @@ if [[ -n $BUILDER_UID ]] && [[ -n $BUILDER_GID ]]; then
     chmod +s $(which $supkg); sync
 
     # Run the command as the specified user/group.
-    exec $supkg $BUILDER_UID:$BUILDER_GID "$@"
+    exec $supkg $BUILDER_UID "$@"
 else
     # Just run the command as root.
     exec "$@"
