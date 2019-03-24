@@ -246,8 +246,8 @@ exit $run_exit_code
 # To create a dockcross helper script for the
 # practicalci/linux-armv7 image, run:
 #
-# docker run --rm practicalci/linux-armv7 > dockcross-linux-armv7
-# chmod +x dockcross-linux-armv7
+# docker run --rm practicalci/linux-armv7 > practicalci-linux-armv7
+# chmod +x practicalci-linux-armv7
 #
 # You may then wish to move the dockcross script to your PATH.
 #

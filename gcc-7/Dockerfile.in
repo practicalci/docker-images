@@ -1,5 +1,10 @@
 FROM @BASE_IMAGE@
 
+# this is required for dockcross script.
+ARG IMAGE=practicalci/linux-anvil
+ARG VERSION=gcc-7
+ENV DEFAULT_DOCKCROSS_IMAGE ${IMAGE}:${VERSION}
+
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
                    g++-7 \

@@ -2,6 +2,11 @@ FROM amd64/ubuntu:bionic-20190307
 
 LABEL maintainer="Mario Costa <mario.silva.costa@gmail.com>"
 
+# this is required for dockcross script.
+ARG IMAGE=practicalci/linux-anvil
+ARG VERSION=latest
+ENV DEFAULT_DOCKCROSS_IMAGE ${IMAGE}:${VERSION}
+
 # Set an encoding to make things work smoothly.
 ENV LANG en_US.UTF-8
 
