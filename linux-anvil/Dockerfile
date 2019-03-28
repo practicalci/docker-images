@@ -24,31 +24,32 @@ RUN echo -e \
 # Install basic requirements.
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-                   bzip2 \
-                   make \
-                   patch \
-                   tar \
-                   ca-certificates \
-                   curl \
-                   git && \
+        bzip2           \
+        tar             \
+        ca-certificates \
+        curl            \
+        make            \
+        git &&          \
     apt-get clean -y && \
     apt-get autoremove --purge -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Run common commands
-COPY scripts/run_commands                   /opt/docker/bin/run_commands
+COPY scripts/run_commands.sh                /opt/docker/bin/run_commands.sh
 COPY scripts/install-liquidprompt-binary.sh /opt/docker/bin/install-liquidprompt-binary.sh
 
-RUN /opt/docker/bin/run_commands
+RUN /opt/docker/bin/run_commands.sh
 RUN /opt/docker/bin/install-liquidprompt-binary.sh
 
 # Add a file for users to source to activate the `conda`
 # environment `root` and the devtoolset compiler. Also
 # add a file that wraps that for use with the `ENTRYPOINT`.
 
-COPY linux-anvil/entrypoint_source /opt/docker/bin/entrypoint_source
-COPY scripts/entrypoint.sh /opt/docker/bin/entrypoint.sh
-COPY scripts/dockcross /opt/docker/bin/dockcross
+COPY linux-anvil/entrypoint_source    /opt/docker/bin/entrypoint_source
+COPY scripts/entrypoint.sh            /opt/docker/bin/entrypoint.sh
+COPY scripts/dockcross                              /opt/docker/bin/dockcross
+COPY scripts/run_conda.sh             /opt/docker/bin/run_conda.sh
+COPY scripts/run_conda_stacked.sh     /opt/docker/bin/run_conda_stacked.sh
 
 WORKDIR /work
 

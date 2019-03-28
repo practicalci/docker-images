@@ -60,9 +60,14 @@ if [[ -n $BUILDER_UID ]] && [[ -n $BUILDER_GID ]]; then
         /dockcross/pre_exec.sh
     fi
 
+    # Source project specific environment
+    if [[ -e /work/.condaenv ]]; then
+        . /work/.condaenv
+    fi
+
     # Execute project specific pre execution hook
     if [[ -e /work/.dockcross ]]; then
-       $supkg $BUILDER_UID:$BUILDER_GID /work/.dockcross
+        $supkg $BUILDER_UID:$BUILDER_GID /work/.dockcross
     fi
 
     # Enable passwordless sudo capabilities for the user

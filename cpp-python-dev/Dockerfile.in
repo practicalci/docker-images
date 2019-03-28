@@ -1,0 +1,36 @@
+FROM @BASE_IMAGE@
+
+# this is required for dockcross script.
+
+ARG REPO=practicalci
+ARG IMAGE=linux-anvil
+ARG VERSION=cpp-python-dev
+
+ENV DEFAULT_DOCKCROSS_REPO ${REPO}
+ENV DEFAULT_DOCKCROSS_IMAGE ${REPO}/${IMAGE}:${VERSION}
+
+COPY scripts/run_commands_conda_devel.sh        /opt/docker/bin/run_commands_conda_devel.sh
+COPY scripts/run_commands_conda_cpp_devel.sh    /opt/docker/bin/run_commands_conda_cpp_devel.sh
+COPY scripts/run_commands_conda_python_devel.sh /opt/docker/bin/run_commands_conda_python_devel.sh
+COPY scripts/install-clang-tidy-to-junit.sh     /opt/docker/bin/install-clang-tidy-to-junit.sh
+
+RUN /opt/docker/bin/run_commands_conda_devel.sh
+RUN /opt/docker/bin/run_commands_conda_cpp_devel.sh
+RUN /opt/docker/bin/run_commands_conda_python_devel.sh
+RUN /opt/docker/bin/install-clang-tidy-to-junit.sh
+
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+                   vim \
+                   g++ \
+                   gcc \
+                   g++-7 \
+                   gcc-7 \
+                   clang-tools-6.0 \
+                   clang-tidy-6.0 \
+                   clang-format-6.0 \
+                   valgrind \
+                   iwyu && \
+    apt-get clean -y && \
+    apt-get autoremove --purge -y && \
+    rm -rf /var/lib/apt/lists/*

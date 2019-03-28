@@ -31,6 +31,27 @@ rm -f miniconda.sh
 touch /opt/conda/conda-meta/pinned
 ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
 source /opt/conda/etc/profile.d/conda.sh
+
+# Initialize conda in skel
+cat << EOF >> /etc/skel/.bashrc
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
+        . "/opt/conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+EOF
+
+
+
 conda activate
 conda config --set show_channel_urls True
 conda config ${additional_channel} --add channels conda-forge
@@ -39,10 +60,10 @@ conda update --all --yes
 conda clean -tipy
 
 # Install conda build and deployment tools.
-conda install --yes --quiet conda-build anaconda-client jinja2 setuptools git python=3.7
+conda install --yes --quiet conda-build anaconda-client jinja2 setuptools python=3.7
 conda clean -tipy
 
-# Install docker tools
+# Install docker tool
 conda install --yes $supkg
 export CONDA_SUEXEC_INFO=( `conda list $supkg | grep $supkg` )
 echo "$supkg ${CONDA_SUEXEC_INFO[1]}" >> /opt/conda/conda-meta/pinned

@@ -7,10 +7,15 @@ ENV DEFAULT_DOCKCROSS_IMAGE ${IMAGE}:${VERSION}
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+                   g++ \
+                   gcc \
                    g++-7 \
                    gcc-7 \
+                   clang-tools-6.0 \
                    clang-tidy-6.0 \
-                   clang-format-6.0 && \
+                   clang-format-6.0 \
+                   valgrind \
+                   iwyu && \
     apt-get clean -y && \
     apt-get autoremove --purge -y && \
     rm -rf /var/lib/apt/lists/*

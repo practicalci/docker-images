@@ -6,9 +6,11 @@ matrix:
       env: DOCKERIMAGE=linux-anvil
 
     - os: linux
-      env: DOCKERIMAGE=linux-anvil:gcc-7
+      env: DOCKERIMAGE=linux-anvil:cpp-python-dev
+
 env:
   global:
+    - DOCKERREPO=practicalci
     secure: "r0LxeZN6GFq5+ATqn4t36aZ5omdTzxEVvCEG4CnBTOoT0P/nsGxfFJhVxDDcGPxNqs76zvMV08hgo8WJeA2WqCREBkhXRM8VTH4zABPsxDYq8ZsjwdgDYne7qyEwuhpEUBvS0KsXrlAsYSzPzHReBxveSZUpwL/10Ud1PcRBSsP+X+Uin51q6juBAOs4DNF55bON/KaZztq0jGkJBW6CcJ7Q3W/Nm3R7JAIFyXzF0SVTCrinSDKCC8Fk/JjjHHKmNbVXfxJVN9XYNmJOvCUSf6uoUstLRLLs5WOJ5Ny7XlHYHYYVA4gpRER2+58SILBXqThRm9JfXNuZ9Z3kSkfWI0qU14DjIRNW8LBzyo1luX7c42/zWLzOcOx8m5etavEJ4sohw2IOsUE/R/1zLrwTFsf5Os9HJ2ImdHtVEMefX5ePesg5s6coh+UFVdef9dlidvphA8kzzWhX91+PC8E9KnhA9TI5eeqr4V+Qkmze3WPzzPJRhaIKFy3xpnjGmPRVk5bHjQ3znR1sjAnHo2zz+1QZ6FY0+ercv6WES2FNDASoqpNiJtpLoZFVhL7SblfXdQ/bWdRcPNALC67a9Fre7kCEJlqQ4ggrxAwoPwJ5VSncA1uiTXLbGjMHqhD1oCKxpcnUve+QSP8nHAZi9uOz2QROig059z7sehvokSzPjzY="
       
 before_install:
@@ -32,7 +34,7 @@ install:
           mkdir -p $DOCKERIMAGE
           sed "s|@BASE_IMAGE@|practicalci/${DOCKERBASEIMAGE}|" $DOCKERIMAGETAG/Dockerfile.in > $DOCKERIMAGE/Dockerfile
       fi
-    - docker build -t practicalci/$DOCKERIMAGE -f $DOCKERIMAGE/Dockerfile --no-cache .
+    - docker build -t $DOCKERREPO/$DOCKERIMAGE -f $DOCKERIMAGE/Dockerfile --no-cache .
 
 script:
     - |
@@ -43,4 +45,4 @@ script:
 
 deploy:
   provider: script
-  script: echo $DH_PASSWORD | docker login -u practicalcibot --password-stdin  && docker push practicalci/$DOCKERIMAGE
+  script: echo $DH_PASSWORD | docker login -u practicalcibot --password-stdin  && docker push $DOCKERREPO/$DOCKERIMAGE
