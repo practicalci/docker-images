@@ -36,21 +36,19 @@ source /opt/conda/etc/profile.d/conda.sh
 cat << EOF >> /etc/skel/.bashrc
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
+__conda_setup="\$('/opt/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ \$? -eq 0 ]; then
+    eval "\$__conda_setup"
 else
     if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
         . "/opt/conda/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/conda/bin:$PATH"
+        export PATH="/opt/conda/bin:\$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 EOF
-
-
 
 conda activate
 conda config --set show_channel_urls True
@@ -72,7 +70,7 @@ echo "$supkg ${CONDA_SUEXEC_INFO[1]}" >> /opt/conda/conda-meta/pinned
 $supkg nobody true
 
 # Emulate sudo
-cat << EOF >> /usr/bin/sudo
+cat << EOF > /usr/bin/sudo
 #!/bin/sh
 
 # Emulate the sudo command

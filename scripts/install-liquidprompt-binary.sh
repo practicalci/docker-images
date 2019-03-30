@@ -11,7 +11,7 @@ cd /usr/share
 
 git clone "https://github.com/nojhan/liquidprompt.git" -b v_1.11
 
-cat << EOF > /etc/skel/.bashrc
+cat << EOF >> /etc/skel/.bashrc
 
 # /etc/skel/.bashrc
 #

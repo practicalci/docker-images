@@ -7,9 +7,11 @@ source /opt/conda/etc/profile.d/conda.sh
 conda activate
 
 # install C++ development tools
+# pyyaml is required by run-clang-tidy.py command
 conda install --yes --quiet \
+  pyyaml              \
   cmake=3.13          \
-  ninja=1.9           \
+  ninja=1.9
 
 pip install gcovr==4.1
 
