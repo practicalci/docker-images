@@ -49,7 +49,6 @@ COPY linux-anvil/entrypoint_source    /opt/docker/bin/entrypoint_source
 COPY scripts/entrypoint.sh            /opt/docker/bin/entrypoint.sh
 COPY scripts/dockcross                              /opt/docker/bin/dockcross
 COPY scripts/run_conda.sh             /opt/docker/bin/run_conda.sh
-COPY scripts/run_conda_stacked.sh     /opt/docker/bin/run_conda_stacked.sh
 
 WORKDIR /work
 
