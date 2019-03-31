@@ -11,7 +11,7 @@ conda activate
 conda install --yes --quiet \
   pyyaml              \
   cmake=3.13          \
-  ninja=1.9
+  ninja=1.9           \
   gcovr=4.1
 
 conda clean -tipy
