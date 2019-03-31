@@ -12,11 +12,7 @@ conda install --yes --quiet \
   pyyaml              \
   cmake=3.13          \
   ninja=1.9
-
-pip install gcovr==4.1
-
-# in ubuntu
-if [ -d ~/.cache/pip ]; then rm -rf ~/.cache/pip; fi
+  gcovr=4.1
 
 conda clean -tipy
 conda build purge-all
